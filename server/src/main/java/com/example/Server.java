@@ -51,7 +51,6 @@ public class Server implements Runnable{
                 InputStream in = clntSock.getInputStream();
 
                 System.out.println("Connected!!");
-                this.textArea.append("Connected!!\n");
 
                 // Transfer data
                 byte[] b = new byte[1024];
@@ -60,7 +59,7 @@ public class Server implements Runnable{
                 length = in.read(b);
                 String s = new String(b);
                 System.out.println("[Server Said]" + s);
-                this.textArea.append("The result from App is" + s+"\n");
+                this.textArea.append("The result from App is " + s+"\n");
             }
             catch(Exception e){
                 //System.out.println("Error: "+e.getMessage());
