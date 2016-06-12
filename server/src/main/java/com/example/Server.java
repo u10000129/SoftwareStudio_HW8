@@ -25,7 +25,6 @@ public class Server implements Runnable{
             System.out.println("IP of my system is := "+IP.getHostAddress());
             textArea.append("IP of my system is := "+IP.getHostAddress()+"\n");
             System.out.println("Waitting to connect......");
-            textArea.append("Waitting to connect......\n");
 
             // Create server socket
             servSock = new ServerSocket(2000);
