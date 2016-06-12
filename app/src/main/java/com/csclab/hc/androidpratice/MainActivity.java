@@ -10,6 +10,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    /** Init Variable for IP page **/
+    EditText inputIP;
+    Button ipSend;
+    String ipAdd = "";
+
     /** Init Variable for Page 1 **/
     EditText inputNumTxt1;
     EditText inputNumTxt2;

@@ -18,13 +18,14 @@ public class Server implements Runnable{
     public Server(JFrame f){
         this.parent = f;
         this.textArea = new JTextArea();
+        this.parent.add(this.textArea);
         try {
             // Detect server ip
             InetAddress IP = InetAddress.getLocalHost();
             System.out.println("IP of my system is := "+IP.getHostAddress());
-            textArea.append("IP of my system is := "+IP.getHostAddress());
+            textArea.append("IP of my system is := "+IP.getHostAddress()+"\n");
             System.out.println("Waitting to connect......");
-            textArea.append("Waitting to connect......");
+            textArea.append("Waitting to connect......\n");
 
             // Create server socket
             servSock = new ServerSocket(2000);
@@ -50,7 +51,7 @@ public class Server implements Runnable{
                 InputStream in = clntSock.getInputStream();
 
                 System.out.println("Connected!!");
-                this.textArea.append("Connected!!");
+                this.textArea.append("Connected!!\n");
 
                 // Transfer data
                 byte[] b = new byte[1024];
@@ -59,7 +60,7 @@ public class Server implements Runnable{
                 length = in.read(b);
                 String s = new String(b);
                 System.out.println("[Server Said]" + s);
-                this.textArea.append("[Server Said]" + s);
+                this.textArea.append("[Server Said]\n" + s);
             }
             catch(Exception e){
                 //System.out.println("Error: "+e.getMessage());
