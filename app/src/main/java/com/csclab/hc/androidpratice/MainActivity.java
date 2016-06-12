@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.OutputStream;
+import java.net.Socket;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     /** Init Variable for IP page **/
     EditText inputIP;
@@ -36,8 +39,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.ip_page);
+        inputIP = (EditText)findViewById(R.id.edIP);
+        ipSend = (Button)findViewById(R.id.ipButton);
+
+        ipSend.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /** Func() for setup page 1 **/
+                ipAdd = inputIP.getText().toString();
+                jumpToMainLayout();
+            }
+        });
         /** Func() for setup page 1 **/
-        jumpToMainLayout();
     }
 
     /** Function for page 1 setup */
@@ -108,8 +122,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // HINT:Using log.d to check your answer is correct before implement page turning
         Log.v("debug","ANS "+result);
         //TODO: Pass the result String to jumpToResultLayout() and show the result at Result view
+        Thread t = new thread(result);
+        t.start();
         jumpToResultLayout(inputNumTxt1.getText().toString()+oper+inputNumTxt2.getText().toString()+" = "+Float.toString(result));
-    }
+}
 
     /** Function for page 2 (result page) setup */
     public void jumpToResultLayout(String resultStr){
@@ -134,6 +150,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     jumpToMainLayout();
                  }
              });
+        }
+    }
+
+    class thread extends Thread{
+        private float result;
+        thread(float result){
+            this.result=result;
+        }
+        public void run(){
+            try{
+                System.out.println("Client: Waiting to connect...");
+                int serverPort = 2000;
+
+                // Create socket connect server
+                Socket socket = new Socket(ipAdd, serverPort);
+                System.out.println("Connected!");
+
+                // Create stream communicate with server
+                OutputStream out = socket.getOutputStream();
+                String strToSend = inputNumTxt1.getText().toString()+oper+inputNumTxt2.getText().toString()+" = "+Float.toString(this.result);
+
+                byte[] sendStrByte = new byte[1024];
+                System.arraycopy(strToSend.getBytes(), 0, sendStrByte, 0, strToSend.length());
+                out.write(sendStrByte);
+
+            }catch (Exception e){
+                System.out.println("Error" + e.getMessage());
+            }
         }
     }
 }
