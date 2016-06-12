@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
         // HINT:Using log.d to check your answer is correct before implement page turning
-        Log.v("debug","ANS "+result);
+        Log.d("debug","ANS "+result);
         //TODO: Pass the result String to jumpToResultLayout() and show the result at Result view
         Thread t = new thread(result);
         t.start();
